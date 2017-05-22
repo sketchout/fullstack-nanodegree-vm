@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container content">
+	<div class="content-info-section">
+		<div class="info-title list-title">{{item.name}}</div>
+		<div class="info-content">Description:<br>{{item.description}}</div>
+	</div>
+	<div class="content-crud-section">
+		<a href="{{url_for('editItem',category_name=category.name,item_name=item.name)}}">Edit</a>
+		|
+		<a href="{{url_for('deleteItem',category_name=category.name,item_name=item.name)}}">Delete</a>
+		|
+		<a href="{{url_for('showCatalog')}}">Cancel</a>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel=stylesheet type=text/css href="{{url_for('static',filename='bootstrap.min.css')}}">
+	<link rel=stylesheet type=text/css href="{{url_for('static',filename='styles.css')}}">
+</head>
+<body>
+<div class="container-fluid header">
+	<div class="container">
+
+		<div class="header-title">
+			<a href="{{url_for('showCatalog')}}">Catalog App</a>
+		</div>
+
+		<div class="header-login">
+		Logged-in({{session['logged_in']}})
+			{% if session['logged_in'] %}
+				<a href="{{url_for('disconnect')}}">
+				<button type="button">Logout</button></a>
+			{% else %}
+				<a href="{{url_for('showLogin')}}">
+				<button type="button">Login</button></a>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<div class="container header-flash">
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+				<li> <strong> {{ message }} </strong> </li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	{% endwith %}
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>

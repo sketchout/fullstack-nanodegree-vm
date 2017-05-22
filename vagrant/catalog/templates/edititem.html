@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container content">
+
+	<div class="content-info-section">
+		<div class="info-title list-title">Edit Item</div>
+		<div class="info-content">
+		</div>
+	</div>
+
+	<div class="content-crud-section">
+		<form action="{{url_for('editItem',category_name=category.name,item_name=item.name)}}" method='post'>
+
+			<h5>Title :</h5>
+			<input type='text' size='30' name='name' value='{{item.name}}'>
+			<br><br>
+			<h5>Description :</h5>
+			<input type='text' size='30' name='description' value='{{item.description}}'>
+			<br><br>
+			<h5>Category :</h5>
+			<select name='category'>
+			{% for c in categories %}
+				{% if c.name == category.name %}
+					<option value='{{c.name}}' selected>{{c.name}}</option>
+				{% else %}
+					<option value='{{c.name}}'>{{c.name}}</option>
+				{% endif %}
+			{% endfor %}
+			</select>
+		<br><br><br>
+		<input type='submit' value='Submit'>
+		<a href="{{url_for('showItemInfo',category_name=category.name,item_name=item.name)}}">Cancel</a>
+		</form>
+
+	</div>
+
+</div>
+
+{% endblock %}
