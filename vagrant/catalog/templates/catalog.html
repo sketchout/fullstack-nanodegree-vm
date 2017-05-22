@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container content">
+	<div class="content-left">
+		<div class="list-title">Categories</div>
+		<ul class="list-item">
+		{% for c in categories %}
+			<li><a href="{{url_for('showCategoryItems',category_name=c.name)}}">{{c.name}}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+	<div class="content-right">
+		<a href="{{url_for('newCategoryItems')}}">Add Item</a>
+		<div class="list-title">Latest Items</div>
+
+		<ul class="list-item">
+		{% for i in items %}
+			<li>
+			{% for c in categories %}
+				{% if c.id == i.category_id %}
+					<a href="{{url_for('showItemInfo',category_name=c.name,item_name=i.name)}}">{{i.name}}</a>
+					<span>({{c.name}})</span>
+				{% endif %}
+			{% endfor %}
+
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}
