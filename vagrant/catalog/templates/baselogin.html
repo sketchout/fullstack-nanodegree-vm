@@ -10,28 +10,7 @@
 	</script>
 	<script src="//apis.google.com/js/platform.js?onload=start"> </script>
 	<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
-<!--FACEBOOK SIGN IN -->
-<script>
-	window.fbAsyncInit = function() {
-	FB.init({
-	  appId      : '807500942758880', // { YOUR_APP_ID_HERE }
-	  cookie     : true,  // enable cookies to allow the server to access
-	                      // the session
-	  xfbml      : true,  // parse social plugins on this page
-	  version    : 'v2.2' // use version 2.2
-	});
-	};
-	// Load the SDK asynchronously
-	( function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js";
-	  fjs.parentNode.insertBefore(js, fjs);
-	} (document, 'script', 'facebook-jssdk')
-	);
-  </script>
-  <!--FACEBOOK SIGN IN -->
+
 </head>
 <body>
 <div class="container-fluid header">

@@ -18,7 +18,9 @@ function signInCallback(authResult) {
             data: authResult['code'],
             success: function(result) {
                 if (result) {
-                    $('#result').html('Login Successful!<br>' + result +'<br>Redirecting...')
+                    $('.login-btn-gplus').hide()
+                    $('.login-btn-facebook').hide()
+                    $('#result').html('Login Successful!<br>' + result +'<br><br>Redirecting...')
                     setTimeout(function() {
                         window.location.href = "/catalog";
                     }, 4000);
@@ -28,6 +30,8 @@ function signInCallback(authResult) {
     } else if (authResult['error']) {
         console.log('There was an error: ' + authResult['error']);
     } else {
+        $('.login-btn-gplus').hide()
+        $('.login-btn-facebook').hide()
         $('#result').html('Failed to make a server-side call. Check your configuration and console.');
     }
 }
@@ -35,13 +39,31 @@ function signInCallback(authResult) {
 <!-- GOOGLE PLUS SIGN IN-->
 <!--FACEBOOK SIGN IN -->
 <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '807500942758880', // { YOUR_APP_ID_HERE }
+      cookie     : true,  // enable cookies to allow the server to access
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.2' // use version 2.2
+    });
+  };
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  } (document, 'script', 'facebook-jssdk'));
+
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
   function sendTokenToServer() {
 
     var access_token = FB.getAuthResponse()['accessToken'];
 
-    console.log("FB access_token :"+access_token)
+    console.log("sendTokenToServer.FB access_token :"+access_token)
     console.log('Welcome!  Fetching your information.... ');
 
     FB.api('/me', function(response) {
@@ -56,11 +78,15 @@ function signInCallback(authResult) {
         success: function(result) {
           // Handle or verify the server response if necessary.
           if (result) {
-              $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+              $('.login-btn-gplus').hide()
+              $('.login-btn-facebook').hide()
+              $('#result').html('Login Successful!</br>'+ result + '</br><br>Redirecting...')
               setTimeout(function() {
                 window.location.href = "/catalog";
               }, 4000);
           } else {
+            $('.login-btn-gplus').hide()
+            $('.login-btn-facebook').hide()
             $('#result').html('Failed to make a server-side call. Check your configuration and console.');
           }
         }
@@ -78,7 +104,6 @@ function signInCallback(authResult) {
 <!-- 		<div class="info-content">Please select the social which do you want.</div> -->
 	</div>
 
-  <div class="login-message-result" id="result"></div>
 
 	<div class="content-crud-section">
 
@@ -100,14 +125,18 @@ function signInCallback(authResult) {
 			<!--END GOOGLE PLUS SIGN IN BUTTON -->
 		</div>
 		<div class="login-btn-facebook">
-		<!--FACEBOOK SIGN IN -->
+
+	  <!--FACEBOOK SIGN IN -->
 			<button class="btn btn-link btn-lg">
-			    <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();" data-size="large">
+			    <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
 			    <a href='javascript:sendTokenToServer()'>Login in</a>
 			    </fb:login-button>
       </button>
-		<!--END FACEBOOK SIGN IN -->
+		<!--END FACEBOOK SIGN IN  data-size="large" -->
+
 		</div>
+
+    <div class="login-message-result" id="result"></div>
 
 	</div>
 </div>

@@ -219,7 +219,7 @@ def deleteItem(category_name,item_name):
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
-    # return "The current session state is %s" % login_session['state']
+    print "showLogin.The current session state is %s" % login_session['state']
     return render_template('login.html', STATE=state)
 
 
@@ -340,7 +340,7 @@ def gconnect():
     output += '!</h3>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 150px; height: 150px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 100px; height: 100px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
 
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
@@ -387,7 +387,7 @@ def fbconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     access_token = request.data
-    print "Received access token : %s " % access_token
+    print "Received FB access token : %s " % access_token
 
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
         'web']['app_id']
@@ -399,15 +399,19 @@ def fbconnect():
     result = h.request(url, 'GET')[1]
 
     # Use token to get user info from API
-    userinfo_url = "https://graph.facebook.com/v2.4/me"
+    # userinfo_url = "https://graph.facebook.com/v2.4/me"
+    userinfo_url = "https://graph.facebook.com/v2.8/me"
     # strip expire tag from access token
-    token = result.split("&")[0]
+    # token = result.split("&")[0]
+    token = result.split(",")[0].split(':')[1].replace('"','')
 
     # me , User_ID
-    url = 'https://graph.facebook.com/v2.4/me?%s&fields=name,id,email' % token
+    # url = 'https://graph.facebook.com/v2.4/me?%s&fields=name,id,email' % token
+    url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-    # print "url sent for API access:%s"% url
+
+    print "url sent for API access:%s"% url
     print "API JSON result : %s" % result
 
     data = json.loads(result)
@@ -419,11 +423,13 @@ def fbconnect():
     login_session['facebook_id'] = data["id"]
 
     # The token must be stored in the login_session in order to properly logout, let's strip out the information before the equals sign in our token
-    stored_token = token.split("=")[1]
+    # stored_token = token.split("=")[1]
+    stored_token = result.split(",")[0].split(':')[1]
     login_session['access_token'] = stored_token
 
     # Get user picture
-    url = 'https://graph.facebook.com/v2.4/me/picture?%s&redirect=0&height=200&width=200' % token
+    # url = 'https://graph.facebook.com/v2.4/me/picture?%s&redirect=0&height=200&width=200' % token
+    url = 'https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=100&width=100' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -446,7 +452,7 @@ def fbconnect():
     output += '!</h3>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 150px; height: 150px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 100px; height: 100px;border-radius: 1-050px;-webkit-border-radius: 100px;-moz-border-radius: 100px;"> '
 
     flash("Now logged in as %s" % login_session['username'])
     return output
