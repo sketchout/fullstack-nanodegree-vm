@@ -3,15 +3,18 @@ Running to this project needs a requirement as below. Please do step by step.
 
 
 Pre-install Package
+=============
 
   Please check the package with pg_config.sh
 
 Pre-setup catalog.db
+=============
 
 	1. run application_database_setup.py
 	2. run application_lotsofitem.py
 
 Get Social Credential And Save to JSON
+=============
 
 	1. Google
 		1) visit https://console.developers.google.com
@@ -23,6 +26,7 @@ Get Social Credential And Save to JSON
 		3) edit fb_client_secrets_example.json and save as fb_client_secrets.json
 
 Access to Local Web Server
+=============
 
 	1. run application.py
 	2. Open browser and access to http://localhost:8000
