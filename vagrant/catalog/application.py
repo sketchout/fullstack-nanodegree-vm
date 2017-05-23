@@ -35,15 +35,6 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-# Fake Category
-# category = {'name':'Baseball','id':'1'}
-# categories = [{'name':'Baseball1','id':'1'},{'name':'Baseball2','id':'2'}]
-
-# Fake Item
-# item = {'name':'Bat','description':'This is description of Bat.','id':'1'}
-# items =[{'name':'Bat1','description':'This is description of Bat.','id':'1'},
-# {'name':'Bat4','description':'This is description of Bat.','id':'4'}]
-
 
 def login_required(f):
     @wraps(f)
